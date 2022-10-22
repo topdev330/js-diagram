@@ -6,7 +6,12 @@ import ReactFlow, {
   useEdgesState,
   Controls,
   Background,
+  NodeProps
 } from 'reactflow';
+import ResizeRotateNode from './ResizeRotateNode';
+
+var sss = require('reactflow');
+console.log('sss=====>', sss);
 import 'reactflow/dist/style.css';
 
 import Sidebar from './Sidebar';
@@ -16,7 +21,7 @@ import './index.css';
 const initialNodes = [
   {
     id: '1',
-    type: 'input',
+    type: 'resizeRotate',
     data: { label: 'input node' },
     position: { x: 250, y: 5 },
   },
@@ -24,6 +29,11 @@ const initialNodes = [
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
+
+const nodeTypes = {
+  resizeRotate: ResizeRotateNode,
+};
+
 
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null);
@@ -49,14 +59,13 @@ const DnDFlow = () => {
       if (typeof type === 'undefined' || !type) {
         return;
       }
-
       const position = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
       const newNode = {
         id: getId(),
-        type,
+        type: "resizeRotate",
         position,
         data: { label: `${type} node` },
       };
@@ -72,6 +81,7 @@ const DnDFlow = () => {
         <Sidebar />
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
+            nodeTypes = {nodeTypes}
             nodes={nodes}
             edges={edges}
             onNodesChange={onNodesChange}
@@ -83,7 +93,7 @@ const DnDFlow = () => {
             fitView
           >
             <Controls />
-            <Background style={{ background: "#011627" }} color="#f97448" />
+            <Background style={{ background: "#323232" }} color="#ddd" />
           </ReactFlow>
         </div>
         
