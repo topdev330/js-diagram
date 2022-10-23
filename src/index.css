@@ -6,10 +6,10 @@
 }
 
 .dndflow aside {
-  border-right: 1px solid #eee;
   padding: 15px 10px;
   font-size: 12px;
-  background: #fcfcfc;
+  background: #1e1e1e;
+
 }
 
 .dndflow aside .description {
@@ -17,15 +17,16 @@
 }
 
 .dndflow .dndnode {
+  background: #abaeb0;
+  border-radius: 4px;
   height: 20px;
   padding: 4px;
-  border: 1px solid #1a192b;
-  border-radius: 2px;
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: grab;
+  color: white;
 }
 
 .dndflow .dndnode.input {

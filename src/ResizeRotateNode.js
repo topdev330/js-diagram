@@ -33,7 +33,6 @@ export default function ResizeRotateNode({
   }, [id]);
 
   const onResize = (evt) => {
-    console.log('onResizeeevt: ', evt);
     if (!nodeRef.current) {
       return;
     }
@@ -65,7 +64,7 @@ export default function ResizeRotateNode({
       <Moveable
         className="nodrag"
         resizable={selected && resizable}
-        rotatable={selected && rotatable}
+        // rotatable={selected && rotatable}
         hideDefaultLines={!selected}
         target={resizeRef}
         onResize={onResize}
@@ -79,17 +78,16 @@ export default function ResizeRotateNode({
         style={{
           width: '100%',
           height: '100%',
-          background: '#ddd',
-          borderRadius: 15,
-          border: '1px solid #ff0072',
-          backgroundColor: '#ffcce3',
+          backgroundColor: '#232426',
+          borderRadius: 4,
+          color: '#969b9e',
           padding: 20,
           transform: `rotate(${rotation}deg)`,
         }}
       >
         <div>
           {data?.label}
-          <div>
+          {/* <div>
             <label>
               <input type="checkbox" checked={resizable} onChange={(evt) => setResizable(evt.target.checked)} />
               resizable
@@ -100,7 +98,7 @@ export default function ResizeRotateNode({
               <input type="checkbox" checked={rotatable} onChange={(evt) => setRotatable(evt.target.checked)} />
               rotatable
             </label>
-          </div>
+          </div> */}
         </div>
         <Handle style={{ opacity: 0.5 }} position={sourcePosition} type="source" />
         <Handle style={{ opacity: 1 }} position={targetPosition} type="target" />

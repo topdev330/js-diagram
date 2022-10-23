@@ -67,7 +67,7 @@ const DnDFlow = () => {
         id: getId(),
         type: "resizeRotate",
         position,
-        data: { label: `${type} node` },
+        data: { label: `${type}` },
       };
 
       setNodes((nds) => nds.concat(newNode));
