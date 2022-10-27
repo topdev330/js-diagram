@@ -10,20 +10,18 @@ import ReactFlow, {
 } from 'reactflow';
 import ResizeRotateNode from './ResizeRotateNode';
 
-var sss = require('reactflow');
-console.log('sss=====>', sss);
 import 'reactflow/dist/style.css';
 
 import Sidebar from './Sidebar';
-
+import SidebarRight from './SidebarRight';
 import './index.css';
 
 const initialNodes = [
   {
     id: '1',
     type: 'resizeRotate',
-    data: { label: 'input node' },
-    position: { x: 250, y: 5 },
+    data: { label: 'input node', description:  "This is a info of block"},
+    position: { x: 250, y: 5 }
   },
 ];
 
@@ -67,7 +65,7 @@ const DnDFlow = () => {
         id: getId(),
         type: "resizeRotate",
         position,
-        data: { label: `${type}` },
+        data: { label: `${type}`, description:  "This is a info of block" },
       };
 
       setNodes((nds) => nds.concat(newNode));
@@ -96,7 +94,7 @@ const DnDFlow = () => {
             <Background style={{ background: "#323232" }} color="#ddd" />
           </ReactFlow>
         </div>
-        
+        <SidebarRight />
       </ReactFlowProvider>
     </div>
   );

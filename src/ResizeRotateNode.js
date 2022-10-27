@@ -1,25 +1,37 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Handle, Position, useReactFlow, useUpdateNodeInternals } from 'reactflow';
+import React, { useEffect, useState, useRef, memo } from 'react';
+import { Handle, Position, useReactFlow, useUpdateNodeInternals, Background } from 'reactflow';
 import {
   makeMoveable,
-
   Rotatable,
   Draggable,
   Resizable,
   OnResize,
   OnRotate,
 } from 'react-moveable';
-var sf = require('reactflow');
+
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  decrement,
+  increment,
+  incrementByAmount,
+  incrementAsync,
+  selectDescription,
+  setDescription,
+  selectCount,
+} from './counterSlice';
 
 const Moveable = makeMoveable([Draggable, Resizable, Rotatable]);
 
-export default function ResizeRotateNode({
+function ResizeRotateNode({
   id,
   selected,
   sourcePosition = Position.Left,
   targetPosition = Position.Right,
-  data,
-}) {
+  data}) {
+    const dispatch = useDispatch();
+    const count = useSelector(selectCount);
+    const description = useSelector(selectDescription);
+
   const nodeRef = useRef(null);
   const resizeRef = useRef(null);
   const { setNodes } = useReactFlow();
@@ -84,9 +96,14 @@ export default function ResizeRotateNode({
           padding: 20,
           transform: `rotate(${rotation}deg)`,
         }}
+        onClick={() => dispatch(setDescription(data?.label))}
       >
         <div>
-          {data?.label}
+          
+          <h1>{data?.label}</h1>
+          <br/>
+          {data?.description}
+          <p>{count}</p>
           {/* <div>
             <label>
               <input type="checkbox" checked={resizable} onChange={(evt) => setResizable(evt.target.checked)} />
@@ -100,9 +117,15 @@ export default function ResizeRotateNode({
             </label>
           </div> */}
         </div>
-        <Handle style={{ opacity: 0.5 }} position={sourcePosition} type="source" />
-        <Handle style={{ opacity: 1 }} position={targetPosition} type="target" />
+        <Handle style={{ opacity: 0.5 , background: "red"}} position={sourcePosition} type="source" />
+        <Handle style={{ opacity: 0.5 , background: "red"}} id="a" position="left" />
+        <Handle style={{ opacity: 1 , background: "gray"}} id="b" position="right" />
+        <Handle style={{ opacity: 1 , background: "green"}} id="c" position="bottom" />
+
+        <Handle style={{ opacity: 1, background: "blue" }} position={targetPosition} type="target" />
       </div>
     </>
   );
 }
+
+export default ResizeRotateNode;

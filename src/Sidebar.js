@@ -41,7 +41,7 @@ export default () => {
       <div className="dndnode" onDragStart={(event) => onDragStart(event, 'Statefulset')} draggable>
         Statefulset
       </div>
-      ingress
+      
     </aside>
   );
 };
