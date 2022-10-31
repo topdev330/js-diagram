@@ -1,26 +1,35 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
+  selectedK8Key,
   selectDescription,
+  setK8Key,
   setDescription,
   selectCount,
+  selectK8json,
+  setK8JsonContent
 } from './counterSlice';
 
 export default () => {
+  
   const dispatch = useDispatch();
-  const description = useSelector(selectDescription);
+  const k8Key = useSelector(selectedK8Key);
+  const k8json = useSelector(selectK8json);
+  let apiVersion = '';
+  if(k8json && k8Key) {
+    apiVersion = k8json[k8Key].apiVersion
+  }
+  
+  const handleChange = (e) => {
+    dispatch(setK8JsonContent({key: k8Key, value: e.target.value}))
+  };
 
   return (
     <aside id='sidebar-right'>
-      <h1>Right Side Panel</h1>
+      <h1>{k8Key}</h1>
       <br/>
-      <br/>
-      <br/>
-      <h1>{description}</h1>
+      <input onChange={(event) => handleChange(event)}/>
     </aside>
   );
 };
+

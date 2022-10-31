@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -8,6 +8,9 @@ import ReactFlow, {
   Background,
   NodeProps
 } from 'reactflow';
+import { useSelector, useDispatch } from 'react-redux';
+import {setK8json} from './counterSlice';
+
 import ResizeRotateNode from './ResizeRotateNode';
 
 import 'reactflow/dist/style.css';
@@ -20,7 +23,7 @@ const initialNodes = [
   {
     id: '1',
     type: 'resizeRotate',
-    data: { label: 'input node', description:  "This is a info of block"},
+    data: { label: 'input node', content:  "This is a info of block"},
     position: { x: 250, y: 5 }
   },
 ];
@@ -32,8 +35,21 @@ const nodeTypes = {
   resizeRotate: ResizeRotateNode,
 };
 
-
 const DnDFlow = () => {
+  
+  const dispatch = useDispatch();
+  useEffect(() => {
+    fetch("/k8sObjs")
+    .then((res) => {
+      return res.text()
+    })
+    .then((data) => {
+      var domObjs = JSON.parse(data);
+      dispatch(setK8json(domObjs));
+    });
+  }, []);
+  
+
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -51,10 +67,12 @@ const DnDFlow = () => {
       event.preventDefault();
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-      const type = event.dataTransfer.getData('application/reactflow');
+      let nodeData = event.dataTransfer.getData('application/reactflow');
+      nodeData = JSON.parse(nodeData);
+      console.log('nodeData: ', nodeData);
 
       // check if the dropped element is valid
-      if (typeof type === 'undefined' || !type) {
+      if (typeof nodeData === 'undefined' || !nodeData) {
         return;
       }
       const position = reactFlowInstance.project({
@@ -65,7 +83,7 @@ const DnDFlow = () => {
         id: getId(),
         type: "resizeRotate",
         position,
-        data: { label: `${type}`, description:  "This is a info of block" },
+        data: { label: `${nodeData.key}`, content:  `${nodeData.body.apiVersion}` },
       };
 
       setNodes((nds) => nds.concat(newNode));
@@ -90,7 +108,7 @@ const DnDFlow = () => {
             onDragOver={onDragOver}
             fitView
           >
-            <Controls />
+            {/* <Controls /> */}
             <Background style={{ background: "#323232" }} color="#ddd" />
           </ReactFlow>
         </div>

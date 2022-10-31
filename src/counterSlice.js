@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-const ss = require('@reduxjs/toolkit')
 
 export const counterSlice = createSlice({
-  name: 'counter',
+  name: 'counter12221',
   initialState: {
     value: 0,
-    text: ''
+    text: '',
+    k8json: {},
+    selectedK8Key: ''
   },
   reducers: {
     increment: (state) => {
@@ -23,12 +24,27 @@ export const counterSlice = createSlice({
     },
     setDescription: (state, action) => {
       state.text = action.payload
-    }
+    },
+    setK8json: (state, action) => {
+      state.k8json = action.payload
+    },
+    setK8JsonContent: (state, action) => {
+      state.k8json[action.payload.key].apiVersion = action.payload.value;
+    },
+    setK8Key: (state, action) => {
+      state.selectedK8Key = action.payload
+    },
   },
 })
 
-export const { increment, decrement, incrementByAmount, setDescription } = counterSlice.actions
-export const selectCount = (state) => state.counter.value
+export const { increment, decrement, incrementByAmount, setDescription, setK8json, setK8Key, setK8JsonContent } = counterSlice.actions
+
+
+// export const selectCount = (state) => state.counter.value
+
+
 export const selectDescription = (state) => state.counter.text
-console.log('counterSlice: ', counterSlice);
+export const selectedK8Key = (state) => state.counter.selectedK8Key
+export const selectK8json = (state) => state.counter.k8json
+
 export default counterSlice.reducer

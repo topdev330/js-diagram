@@ -1,0 +1,30 @@
+﻿{
+  "apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+    "name": "test-pd"
+  },
+  "spec": {
+    "containers": [
+      {
+        "image": "registry.k8s.io/test-webserver",
+        "name": "test-container",
+        "volumeMounts": [
+          {
+            "mountPath": "/test-pd",
+            "name": "test-volume"
+          }
+        ]
+      }
+    ],
+    "volumes": [
+      {
+        "name": "test-volume",
+        "hostPath": {
+          "path": "/data",
+          "type": "Directory"
+        }
+      }
+    ]
+  }
+}

@@ -17,7 +17,7 @@
 }
 
 .dndflow .dndnode {
-  background: #abaeb0;
+  background: #353535;
   border-radius: 4px;
   height: 20px;
   padding: 4px;
@@ -27,6 +27,7 @@
   align-items: center;
   cursor: grab;
   color: white;
+  font-size: 16px;
 }
 
 .dndflow .dndnode.input {
@@ -52,13 +53,11 @@
   }
 
   .dndflow aside {
-    width: 5%;
-    max-width: 250px;
+    width: 146px;
   }
 }
 
 #sidebar-right {
-  width: 20%;
-  max-width: 250px;
+  width: 250px;
   color: white; 
 }

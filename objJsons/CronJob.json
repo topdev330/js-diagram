@@ -1,0 +1,32 @@
+{
+  "apiVersion": "batch/v1beta1",
+  "kind": "CronJob",
+  "metadata": {
+    "name": "nginx",
+    "namespace": "new-namespace"
+  },
+  "spec": {
+    "schedule": "* * * * *",
+    "jobTemplate": {
+      "spec": {
+        "template": {
+          "spec": {
+            "containers": [
+              {
+                "name": "nginx",
+                "image": "nginx",
+                "imagePullPolicy": "IfNotPresent",
+                "command": [
+                  "/bin/sh",
+                  "-c",
+                  "nginx -t"
+                ]
+              }
+            ],
+            "restartPolicy": "OnFailure"
+          }
+        }
+      }
+    }
+  }
+}

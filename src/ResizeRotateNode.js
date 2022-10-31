@@ -15,8 +15,11 @@ import {
   increment,
   incrementByAmount,
   incrementAsync,
-  selectDescription,
   setDescription,
+  setK8Key,
+  selectedK8Key,
+  selectK8json,
+  selectDescription,
   selectCount,
 } from './counterSlice';
 
@@ -29,8 +32,11 @@ function ResizeRotateNode({
   targetPosition = Position.Right,
   data}) {
     const dispatch = useDispatch();
-    const count = useSelector(selectCount);
-    const description = useSelector(selectDescription);
+    const count = useSelector((state) => state.counter.value);
+    const description = useSelector(selectedK8Key);
+    const m_k8json = useSelector(selectK8json);
+    const m_json = m_k8json[data.label];
+    console.log('m_json: ', m_json);
 
   const nodeRef = useRef(null);
   const resizeRef = useRef(null);
@@ -43,6 +49,14 @@ function ResizeRotateNode({
   useEffect(() => {
     nodeRef.current = document.querySelector(`.react-flow__node[data-id="${id}"]`);
   }, [id]);
+
+  useEffect(() => {
+    console.log("descriptionChange!!!");
+    if(m_json) {
+      data.content = m_json.apiVersion;
+    }
+    
+  }, [m_json]);
 
   const onResize = (evt) => {
     if (!nodeRef.current) {
@@ -70,7 +84,7 @@ function ResizeRotateNode({
     setRotation(evt.rotation);
     updateNodeInternals(id);
   };
-
+  
   return (
     <>
       <Moveable
@@ -96,13 +110,13 @@ function ResizeRotateNode({
           padding: 20,
           transform: `rotate(${rotation}deg)`,
         }}
-        onClick={() => dispatch(setDescription(data?.label))}
+        onClick={() => dispatch(setK8Key(data?.label))}
       >
         <div>
           
           <h1>{data?.label}</h1>
           <br/>
-          {data?.description}
+          {data?.content}
           <p>{count}</p>
           {/* <div>
             <label>
@@ -119,6 +133,7 @@ function ResizeRotateNode({
         </div>
         <Handle style={{ opacity: 0.5 , background: "red"}} position={sourcePosition} type="source" />
         <Handle style={{ opacity: 0.5 , background: "red"}} id="a" position="left" />
+        <Handle style={{ opacity: 0.5 , background: "red"}} id="ab" position="left" />
         <Handle style={{ opacity: 1 , background: "gray"}} id="b" position="right" />
         <Handle style={{ opacity: 1 , background: "green"}} id="c" position="bottom" />
 
@@ -128,4 +143,4 @@ function ResizeRotateNode({
   );
 }
 
-export default ResizeRotateNode;
+export default memo(ResizeRotateNode);
