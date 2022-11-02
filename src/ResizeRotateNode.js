@@ -31,12 +31,14 @@ function ResizeRotateNode({
   sourcePosition = Position.Left,
   targetPosition = Position.Right,
   data}) {
-    const dispatch = useDispatch();
-    const count = useSelector((state) => state.counter.value);
-    const description = useSelector(selectedK8Key);
-    const m_k8json = useSelector(selectK8json);
-    const m_json = m_k8json[data.label];
-    console.log('m_json: ', m_json);
+
+  const dispatch = useDispatch();
+  // const count = useSelector((state) => state.counter.value);
+  const count = 12
+  // const description = useSelector(selectedK8Key);
+  
+  const m_k8json = useSelector(selectK8json);
+  const m_json = m_k8json[data.label];
 
   const nodeRef = useRef(null);
   const resizeRef = useRef(null);
@@ -46,17 +48,14 @@ function ResizeRotateNode({
   const [resizable, setResizable] = useState(true);
   const [rotatable, setRotatable] = useState(true);
 
-  useEffect(() => {
-    nodeRef.current = document.querySelector(`.react-flow__node[data-id="${id}"]`);
-  }, [id]);
-
-  useEffect(() => {
-    console.log("descriptionChange!!!");
-    if(m_json) {
-      data.content = m_json.apiVersion;
-    }
-    
-  }, [m_json]);
+  // useEffect(() => {
+  //   nodeRef.current = document.querySelector(`.react-flow__node[data-id="${id}"]`);
+  // }, [id]);
+  nodeRef.current = document.querySelector(`.react-flow__node[data-id="${id}"]`);
+  
+  if(m_json) {
+    data.content = JSON.stringify(m_json);
+  }
 
   const onResize = (evt) => {
     if (!nodeRef.current) {
@@ -98,6 +97,7 @@ function ResizeRotateNode({
         origin={true}
         keepRatio={false}
         throttleResize={10}
+        renderDirections={["nw", "ne", "sw", "se"]}
       />
       <div
         ref={resizeRef}
@@ -131,13 +131,13 @@ function ResizeRotateNode({
             </label>
           </div> */}
         </div>
-        <Handle style={{ opacity: 0.5 , background: "red"}} position={sourcePosition} type="source" />
-        <Handle style={{ opacity: 0.5 , background: "red"}} id="a" position="left" />
-        <Handle style={{ opacity: 0.5 , background: "red"}} id="ab" position="left" />
-        <Handle style={{ opacity: 1 , background: "gray"}} id="b" position="right" />
-        <Handle style={{ opacity: 1 , background: "green"}} id="c" position="bottom" />
+        {/* <Handle style={{ opacity: 0.5 , background: "red"}} position={sourcePosition} type="source" /> */}
+        <Handle style={{ opacity: 0.5 , background: "white"}} id="a" position="left" type="source" />
+        <Handle style={{ opacity: 0.5 , background: "white"}} id="ab" position="top" type="source" />
+        <Handle style={{ opacity: 1 , background: "black"}} id="b" position="right" type="source" />
+        <Handle style={{ opacity: 1 , background: "black"}} id="c" position="bottom" type="source" />
 
-        <Handle style={{ opacity: 1, background: "blue" }} position={targetPosition} type="target" />
+        {/* <Handle style={{ opacity: 1, background: "blue" }} position={targetPosition} type="target" /> */}
       </div>
     </>
   );

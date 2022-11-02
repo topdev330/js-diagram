@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   selectedK8Key,
@@ -11,24 +11,27 @@ import {
 } from './counterSlice';
 
 export default () => {
-  
   const dispatch = useDispatch();
   const k8Key = useSelector(selectedK8Key);
   const k8json = useSelector(selectK8json);
-  let apiVersion = '';
-  if(k8json && k8Key) {
-    apiVersion = k8json[k8Key].apiVersion
-  }
+
+  useEffect(() => {
+    if(k8json && k8Key && k8json[k8Key]) {
+      document.querySelector("#slectedObjDescription").value = JSON.stringify(k8json[k8Key])
+    }
+  }, [k8Key]);
+
   
   const handleChange = (e) => {
-    dispatch(setK8JsonContent({key: k8Key, value: e.target.value}))
+    e.preventDefault();
+    dispatch(setK8JsonContent({key: k8Key, value: JSON.parse(e.target.value)}))
   };
 
   return (
     <aside id='sidebar-right'>
       <h1>{k8Key}</h1>
       <br/>
-      <input onChange={(event) => handleChange(event)}/>
+      <textarea id="slectedObjDescription" onChange={(event) => handleChange(event)} rows ="10"></textarea>
     </aside>
   );
 };

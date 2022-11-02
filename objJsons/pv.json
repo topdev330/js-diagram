@@ -1,0 +1,21 @@
+{
+    "kind": "PersistentVolume",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "nginx-pv"
+    },
+    "spec": {
+        "capacity": {
+            "storage": "1Gi"
+        },
+        "hostPath": {
+            "path": "/opt/to/host"
+        },
+        "accessModes": [
+            "ReadWriteMany"
+        ],
+        "persistentVolumeReclaimPolicy": "Retain",
+        "storageClassName": "standart",
+        "volumeMode": "Filesystem"
+    }
+}

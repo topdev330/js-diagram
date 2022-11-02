@@ -20,12 +20,12 @@ import SidebarRight from './SidebarRight';
 import './index.css';
 
 const initialNodes = [
-  {
-    id: '1',
-    type: 'resizeRotate',
-    data: { label: 'input node', content:  "This is a info of block"},
-    position: { x: 250, y: 5 }
-  },
+  // {
+  //   id: '1',
+  //   type: 'resizeRotate',
+  //   data: { label: 'input node', content:  "This is a info of block"},
+  //   position: { x: 250, y: 5 }
+  // },
 ];
 
 let id = 0;
@@ -107,6 +107,7 @@ const DnDFlow = () => {
             onDrop={onDrop}
             onDragOver={onDragOver}
             fitView
+            connectionMode="loose"
           >
             {/* <Controls /> */}
             <Background style={{ background: "#323232" }} color="#ddd" />

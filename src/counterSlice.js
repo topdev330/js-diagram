@@ -29,7 +29,7 @@ export const counterSlice = createSlice({
       state.k8json = action.payload
     },
     setK8JsonContent: (state, action) => {
-      state.k8json[action.payload.key].apiVersion = action.payload.value;
+      state.k8json[action.payload.key] = action.payload.value;
     },
     setK8Key: (state, action) => {
       state.selectedK8Key = action.payload

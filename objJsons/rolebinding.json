@@ -1,0 +1,21 @@
+{
+    "kind": "RoleBinding",
+    "apiVersion": "rbac.authorization.k8s.io/v1",
+    "metadata": {
+        "name": "role-binding",
+        "namespace": "new-namespace",
+        "creationTimestamp": null
+    },
+    "subjects": [
+        {
+            "kind": "ServiceAccount",
+            "name": "build-robot",
+            "namespace": "default"
+        }
+    ],
+    "roleRef": {
+        "apiGroup": "rbac.authorization.k8s.io",
+        "kind": "Role",
+        "name": "pod"
+    }
+}

@@ -1,33 +1,32 @@
 {
-  "apiVersion": "extensions/v1beta1",
-  "kind": "Ingress",
-  "metadata": {
-    "name": "ingress-service",
-    "namespace": "default"
-  },
-  "spec": {
-    "rules": [
-      {
-        "host": "services.example.com",
-        "http": {
-          "paths": [
+    "kind": "Ingress",
+    "apiVersion": "extensions/v1beta1",
+    "metadata": {
+        "name": "ingress-name",
+        "namespace": "new-namespace",
+        "creationTimestamp": null
+    },
+    "spec": {
+        "ingressClassName": "nginx",
+        "rules": [
             {
-              "backend": {
-                "serviceName": "service1",
-                "servicePort": 80
-              },
-              "path": "/service1"
-            },
-            {
-              "backend": {
-                "serviceName": "service2",
-                "servicePort": 80
-              },
-              "path": "/service2"
+                "host": "url.example",
+                "http": {
+                    "paths": [
+                        {
+                            "path": "/",
+                            "pathType": "Prefix",
+                            "backend": {
+                                "serviceName": "nginx-svc",
+                                "servicePort": 80
+                            }
+                        }
+                    ]
+                }
             }
-          ]
-        }
-      }
-    ]
-  }
+        ]
+    },
+    "status": {
+        "loadBalancer": {}
+    }
 }

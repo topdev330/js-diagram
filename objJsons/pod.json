@@ -1,0 +1,73 @@
+{
+    "kind": "Pod",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "nginx",
+        "namespace": "new-namespace",
+        "labels": {
+            "app": "nginx"
+        }
+    },
+    "spec": {
+        "volumes": [
+            {
+                "name": "nginx-log",
+                "persistentVolumeClaim": {
+                    "claimName": "nginx-pvc"
+                }
+            },
+            {
+                "name": "nginx-config-ref",
+                "configMap": {
+                    "name": "nginx-config",
+                    "defaultMode": 420
+                }
+            }
+        ],
+        "containers": [
+            {
+                "name": "nginx",
+                "image": "nginx",
+                "ports": [
+                    {
+                        "containerPort": 80,
+                        "protocol": "TCP"
+                    }
+                ],
+                "env": [
+                    {
+                        "name": "USERNAME",
+                        "valueFrom": {
+                            "secretKeyRef": {
+                                "name": "secret-name",
+                                "key": "username"
+                            }
+                        }
+                    }
+                ],
+                "volumeMounts": [
+                    {
+                        "name": "nginx-log",
+                        "mountPath": "/var/logs/nginx"
+                    },
+                    {
+                        "name": "nginx-config-ref",
+                        "mountPath": "/etc/nginx/nginx.conf",
+                        "subPath": "nginx.conf"
+                    }
+                ],
+                "resources": {
+                    "limits": {
+                        "cpu": "100m",
+                        "memory": "128Mi"
+                    },
+                    "requests": {
+                        "cpu": "100m",
+                        "memory": "128Mi"
+                    }
+                },                
+                "imagePullPolicy": "Always"
+            }
+        ]
+    }
+}

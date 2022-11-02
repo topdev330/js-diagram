@@ -1,0 +1,24 @@
+{
+    "kind": "Role",
+    "apiVersion": "rbac.authorization.k8s.io/v1",
+    "metadata": {
+        "name": "role",
+        "namespace": "new-namespace",
+        "creationTimestamp": null
+    },
+    "rules": [
+        {
+            "verbs": [
+                "get",
+                "watch",
+                "list"
+            ],
+            "apiGroups": [
+                ""
+            ],
+            "resources": [
+                "pods"
+            ]
+        }
+    ]
+}
