@@ -9,6 +9,20 @@
         }
     },
     "data": {
-        "nginx.conf": "user nginx;\nworker_processes  1;\nevents {\n  worker_connections  10240;\n}\nhttp {\n  server {\n      listen       80;\n      server_name  localhost;\n      location / {\n        root   /usr/share/nginx/html; #Change this line\n        index  index.html index.htm;\n    }\n  }\n}\n"
+        "nginx.conf": "user nginx",
+        "worker_processes": 1,
+        "events": {
+          "worker_connections": 10240
+        },
+        "http": {
+            "server": {
+              "listen": 80,
+              "server_name": "localhost",
+              "location": {
+                "root": "/usr/share/nginx/html",
+                "index": "index.html index.htm"
+            }
+          }
+        }
     }
 }

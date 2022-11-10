@@ -131,13 +131,14 @@ function ResizeRotateNode({
             </label>
           </div> */}
         </div>
-        {/* <Handle style={{ opacity: 0.5 , background: "red"}} position={sourcePosition} type="source" /> */}
-        <Handle style={{ opacity: 0.5 , background: "white"}} id="a" position="left" type="source" />
+        <Handle style={{ opacity: 0.5 , background: "red"}} position={sourcePosition} type="source" />
+        <Handle style={{ opacity: 1, background: "blue" }} position={targetPosition} type="target" />
+        {/* <Handle style={{ opacity: 0.5 , background: "white"}} id="a" position="left" type="source" />
         <Handle style={{ opacity: 0.5 , background: "white"}} id="ab" position="top" type="source" />
         <Handle style={{ opacity: 1 , background: "black"}} id="b" position="right" type="source" />
-        <Handle style={{ opacity: 1 , background: "black"}} id="c" position="bottom" type="source" />
+        <Handle style={{ opacity: 1 , background: "black"}} id="c" position="bottom" type="source" /> */}
 
-        {/* <Handle style={{ opacity: 1, background: "blue" }} position={targetPosition} type="target" /> */}
+        
       </div>
     </>
   );

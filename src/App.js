@@ -8,6 +8,9 @@ import ReactFlow, {
   Background,
   NodeProps
 } from 'reactflow';
+
+import {k8Relations} from "./config.js";
+
 import { useSelector, useDispatch } from 'react-redux';
 import {setK8json} from './counterSlice';
 
@@ -39,7 +42,7 @@ const DnDFlow = () => {
   
   const dispatch = useDispatch();
   useEffect(() => {
-    fetch("/k8sObjs")
+    fetch("https://k8json.herokuapp.com/k8sObjs") // http://localhost:3011/k8sObjs
     .then((res) => {
       return res.text()
     })
@@ -79,14 +82,34 @@ const DnDFlow = () => {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
+
+      const newId = getId();
       const newNode = {
-        id: getId(),
+        id: newId,
         type: "resizeRotate",
         position,
-        data: { label: `${nodeData.key}`, content:  `${nodeData.body.apiVersion}` },
+        data: { label: `${nodeData.key}`, content:  `${nodeData.body.apiVersion}`, data:  nodeData.body},
       };
 
-      setNodes((nds) => nds.concat(newNode));
+      let tempNodes = [];
+      setNodes((nds) => {
+        tempNodes = nds.concat(newNode)
+        return tempNodes
+      });
+
+      const newEdgeId = Math.random();
+      console.log("here1===>", nodes.length);
+
+      tempNodes.forEach(node => {
+        console.log('node: ', node);
+        var flag = k8Relations(newNode.data.data, node.data.data);
+        console.log('flag: ', flag);
+        if(flag) {
+          const newEdgeId = "edge_" + Math.random();
+          setEdges((eds) => addEdge({ id: newEdgeId, source: newId , target: node.id, label: 'con' }, eds))
+        }
+      });
+      
     },
     [reactFlowInstance]
   );
